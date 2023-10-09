@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
      */
     connect(dataBase, &DataBase::sig_SendStatusConnection, this, &MainWindow::ReceiveStatusConnectionToDB);
 
+    connect(dataBase, &DataBase::sig_SendStatusRequest, this, &MainWindow::ReceiveStatusRequestToDB);
+
 }
 
 MainWindow::~MainWindow()

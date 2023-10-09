@@ -86,6 +86,7 @@ void DataBase::RequestToDB(QString request)
     qModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Название фильма"));
     qModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Описание фильма"));
 
+
     QSqlError err;
     if (qModel->lastError().isValid()){
             err = qModel->lastError();
