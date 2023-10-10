@@ -8,6 +8,11 @@ DbData::DbData(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->le_host->setText("981757-ca08998.tmweb.ru");
+    ui->le_dbName->setText("netology_cpp");
+    ui->le_login->setText("netology_usr_cpp");
+    ui->le_pass->setText("CppNeto3");
+    ui->spB_port->setValue(5432);
 
     //Ресайзим вектор значений, по количеству полей необходимых для
     //подключения к БД

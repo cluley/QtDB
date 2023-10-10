@@ -6,7 +6,7 @@ DataBase::DataBase(QObject *parent)
 
     dataBase = new QSqlDatabase();
     qModel = new QSqlQueryModel();
-    tModel = new QSqlTableModel();
+//    tModel = new QSqlTableModel();
     view = new QTableView();
 
 }
@@ -45,11 +45,11 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
     dataBase->setPassword(data[pass]);
     dataBase->setPort(data[port].toInt());
 
-    ///Тут должен быть код ДЗ
-
-
     bool status;
     status = dataBase->open( );
+
+    tModel = new QSqlTableModel(this, dataBase);
+
     emit sig_SendStatusConnection(status);
 
 }
@@ -85,7 +85,6 @@ void DataBase::RequestToDB(QString request)
     qModel->setQuery(request);
     qModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Название фильма"));
     qModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Описание фильма"));
-
 
     QSqlError err;
     if (qModel->lastError().isValid()){
