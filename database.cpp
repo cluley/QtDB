@@ -5,17 +5,13 @@ DataBase::DataBase(QObject *parent)
 {
 
     dataBase = new QSqlDatabase();
-    qModel = new QSqlQueryModel();
-//    tModel = new QSqlTableModel();
-    view = new QTableView();
+    qModel = new QSqlQueryModel(this);
 
 }
 
 DataBase::~DataBase()
 {
     delete dataBase;
-    delete qModel;
-    delete tModel;
     delete view;
 }
 
@@ -28,6 +24,8 @@ void DataBase::AddDataBase(QString driver, QString nameDB)
 {
 
     *dataBase = QSqlDatabase::addDatabase(driver, nameDB);
+
+    tModel = new QSqlTableModel(this, *dataBase);
 
 }
 
@@ -48,18 +46,53 @@ void DataBase::ConnectToDataBase(QVector<QString> data)
     bool status;
     status = dataBase->open( );
 
-    tModel = new QSqlTableModel(this, dataBase);
-
     emit sig_SendStatusConnection(status);
 
 }
 
 void DataBase::ReadAnswerFromDB()
 {
-    view->setModel(qModel);
+    switch(currentRequestedModel)
+    {
+    case modelType::query:
+        view->setModel(qModel);
+        view->showColumn(0);
+        break;
+    case modelType::table:
+        view->setModel(tModel);
+        view->hideColumn(0);
+        break;
+    default:
+        break;
+    };
+
     view->setWindowTitle("ПоискКино");
     view->show();
 
+}
+
+void DataBase::RequestToTableDB(QString request)
+{
+    tModel->setTable("film");
+    tModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    tModel->select();
+    tModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Название фильма"));
+    tModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Описание"));
+    tModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Год релиза"));
+
+    QSqlError err;
+    if(tModel->lastError().isValid()){
+        err = tModel->lastError();
+    }
+
+    currentRequestedModel = modelType::table;
+
+    emit sig_SendStatusRequest(err);
+}
+
+void DataBase::BindView(QTableView* view_)
+{
+    view = view_;
 }
 
 
@@ -82,7 +115,7 @@ void DataBase::DisconnectFromDataBase(QString nameDb)
 void DataBase::RequestToDB(QString request)
 {
 
-    qModel->setQuery(request);
+    qModel->setQuery(request, *dataBase);
     qModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Название фильма"));
     qModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Описание фильма"));
 
@@ -90,6 +123,8 @@ void DataBase::RequestToDB(QString request)
     if (qModel->lastError().isValid()){
             err = qModel->lastError();
     }
+
+    currentRequestedModel = modelType::query;
 
     emit sig_SendStatusRequest(err);
 }

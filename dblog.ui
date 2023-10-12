@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DBLog</class>
+ <widget class="QDialog" name="DBLog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>182</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="l_hostName">
+     <property name="text">
+      <string>Имя хоста</string>
+     </property>
+     <property name="buddy">
+      <cstring>le_hostName</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="le_hostName"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="l_dbName">
+     <property name="text">
+      <string>Имя базы данных:</string>
+     </property>
+     <property name="buddy">
+      <cstring>le_dbName</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="le_dbName"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="l_password">
+     <property name="text">
+      <string>Пароль:</string>
+     </property>
+     <property name="buddy">
+      <cstring>le_password</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="le_password"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="l_connProt">
+     <property name="text">
+      <string>Протокол подключения:</string>
+     </property>
+     <property name="buddy">
+      <cstring>sb_connProt</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QSpinBox" name="sb_connProt">
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <number>9999999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="l_login">
+     <property name="text">
+      <string>Логин:</string>
+     </property>
+     <property name="buddy">
+      <cstring>le_login</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="le_login"/>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>le_hostName</tabstop>
+  <tabstop>le_dbName</tabstop>
+  <tabstop>le_login</tabstop>
+  <tabstop>le_password</tabstop>
+  <tabstop>sb_connProt</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DBLog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DBLog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

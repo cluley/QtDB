@@ -32,7 +32,10 @@ enum requestType{
 
 };
 
-
+enum class modelType{
+    query = 1,
+    table
+};
 
 class DataBase : public QObject
 {
@@ -48,7 +51,8 @@ public:
     QSqlError GetLastError(void);
     void ConnectToDataBase(QVector<QString> dataForConnect);
     void ReadAnswerFromDB();
-
+    void RequestToTableDB(QString request);
+    void BindView(QTableView* view_);
 
 signals:
 
@@ -64,6 +68,8 @@ private:
     QSqlQueryModel* qModel;
     QSqlTableModel* tModel;
     QTableView* view;
+
+    modelType currentRequestedModel;
 
 
 };

@@ -21,8 +21,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="1">
-     <widget class="QPushButton" name="pb_request">
+    <item row="0" column="0">
+     <widget class="QLabel" name="lb_statusConnect">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Отключено</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="pb_clear">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
         <horstretch>0</horstretch>
@@ -30,7 +43,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Получить</string>
+       <string>Очистить</string>
       </property>
      </widget>
     </item>
@@ -91,18 +104,8 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="0" rowspan="4">
-     <widget class="QTableWidget" name="tb_result">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QPushButton" name="pb_clear">
+    <item row="4" column="1">
+     <widget class="QPushButton" name="pb_request">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
         <horstretch>0</horstretch>
@@ -110,20 +113,17 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Очистить</string>
+       <string>Получить</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="lb_statusConnect">
+    <item row="1" column="0" rowspan="4">
+     <widget class="QTableView" name="tb_result">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Отключено</string>
       </property>
      </widget>
     </item>
@@ -161,22 +161,5 @@
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pb_clear</sender>
-   <signal>clicked()</signal>
-   <receiver>tb_result</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>374</x>
-     <y>486</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>200</x>
-     <y>482</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

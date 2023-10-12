@@ -19,9 +19,9 @@ set(PROJECT_SOURCES
         mainwindow.ui
         database.h
         database.cpp
-        dbdata.h
-        dbdata.cpp
-        dbdata.ui
+        dblog.h
+        dblog.cpp
+        dblog.ui
 )
 
 add_executable(PreDataBase

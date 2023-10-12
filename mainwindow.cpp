@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
      * QObject, поэтому воспользуемся иерархией.
     */
 
-    dataDb = new DbData(this);
+    dataDb = new DBLog(this);
     dataBase = new DataBase(this);
     msg = new QMessageBox(this);
 
@@ -26,12 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
      * Добавим БД используя стандартный драйвер PSQL и зададим имя.
     */
     dataBase->AddDataBase(POSTGRE_DRIVER, DB_NAME);
+    dataBase->BindView(ui->tb_result);
 
     /*
      * Устанавливаем данные для подключениея к БД.
      * Поскольку метод небольшой используем лямбда-функцию.
      */
-    connect(dataDb, &DbData::sig_sendData, this, [&](QVector<QString> receivData){
+    connect(dataDb, &DBLog::sig_sendData, this, [&](QVector<QString> receivData){
         dataForConnect = receivData;
     });
 
@@ -101,21 +102,35 @@ void MainWindow::on_act_connect_triggered()
  */
 void MainWindow::on_pb_request_clicked()
 {
-   int type = (ui->cb_category->currentIndex() + 1);
+   uint8_t type = (ui->cb_category->currentIndex() + 1);
+   std::function<void(void)> req;
 
    switch(type)
    {
+   case requestAllFilms:
+       request = "SELECT title, release_year, c.name  FROM film f "
+                 "JOIN film_category fc on f.film_id = fc.film_id "
+                 "JOIN category c on c.category_id  = fc.category_id ";
+       req = [&]{dataBase->RequestToTableDB(request);};
+       break;
    case requestComedy:
-       request += " WHERE c.name = 'Comedy'";
+       request = "SELECT title, description FROM film f "
+                 "JOIN film_category fc on f.film_id = fc.film_id "
+                 "JOIN category c on c.category_id = fc.category_id "
+                 "WHERE c.name = 'Comedy'";
+       req = [&]{dataBase->RequestToDB(request);};
        break;
    case requestHorrors:
-       request += " WHERE c.name = 'Horror'";
+       request = "SELECT title, description FROM film f "
+                 "JOIN film_category fc on f.film_id = fc.film_id "
+                 "JOIN category c on c.category_id = fc.category_id "
+                 " WHERE c.name = 'Horror'";
+       req = [&]{dataBase->RequestToDB(request);};
        break;
    default:
        break;
    }
 
-   auto req = [&]{dataBase->RequestToDB(request);};
    QtConcurrent::run(req);
 
 }
