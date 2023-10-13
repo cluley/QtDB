@@ -12,7 +12,6 @@ DataBase::DataBase(QObject *parent)
 DataBase::~DataBase()
 {
     delete dataBase;
-    delete view;
 }
 
 /*!
@@ -61,6 +60,17 @@ void DataBase::ReadAnswerFromDB()
     case modelType::table:
         view->setModel(tModel);
         view->hideColumn(0);
+        view->hideColumn(3);
+        view->hideColumn(4);
+        view->hideColumn(5);
+        view->hideColumn(6);
+        view->hideColumn(7);
+        view->hideColumn(8);
+        view->hideColumn(9);
+        view->hideColumn(10);
+        view->hideColumn(11);
+        view->hideColumn(12);
+        view->hideColumn(13);
         break;
     default:
         break;
@@ -71,24 +81,6 @@ void DataBase::ReadAnswerFromDB()
 
 }
 
-void DataBase::RequestToTableDB(QString request)
-{
-    tModel->setTable("film");
-    tModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    tModel->select();
-    tModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Название фильма"));
-    tModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Описание"));
-    tModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Год релиза"));
-
-    QSqlError err;
-    if(tModel->lastError().isValid()){
-        err = tModel->lastError();
-    }
-
-    currentRequestedModel = modelType::table;
-
-    emit sig_SendStatusRequest(err);
-}
 
 void DataBase::BindView(QTableView* view_)
 {
@@ -125,6 +117,24 @@ void DataBase::RequestToDB(QString request)
     }
 
     currentRequestedModel = modelType::query;
+
+    emit sig_SendStatusRequest(err);
+}
+
+void DataBase::RequestToTableDB()
+{
+    tModel->setTable("film");
+    tModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    tModel->select();
+    tModel->setHeaderData(1, Qt::Horizontal, QObject::tr("Название фильма"));
+    tModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Описание фильма"));
+
+    QSqlError err;
+    if(tModel->lastError().isValid()){
+        err = tModel->lastError();
+    }
+
+    currentRequestedModel = modelType::table;
 
     emit sig_SendStatusRequest(err);
 }

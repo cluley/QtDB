@@ -48,15 +48,13 @@ public:
     void AddDataBase(QString driver, QString nameDB = "");
     void DisconnectFromDataBase(QString nameDb = "");
     void RequestToDB(QString request);
+    void RequestToTableDB();
     QSqlError GetLastError(void);
     void ConnectToDataBase(QVector<QString> dataForConnect);
     void ReadAnswerFromDB();
-    void RequestToTableDB(QString request);
     void BindView(QTableView* view_);
 
 signals:
-
-   void sig_SendDataFromDB(const QTableWidget *widget, int typeRequest);
    void sig_SendStatusConnection(bool);
    void sig_SendStatusRequest(QSqlError err);
 

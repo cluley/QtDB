@@ -37,11 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     /*
-     * Соединяем сигнал, который передает ответ от БД с методом, который отображает ответ в ПИ
-     */
-    connect(dataBase, &DataBase::sig_SendDataFromDB, this, &MainWindow::ScreenDataFromDB);
-
-    /*
      *  Сигнал для подключения к БД
      */
     connect(dataBase, &DataBase::sig_SendStatusConnection, this, &MainWindow::ReceiveStatusConnectionToDB);
@@ -108,10 +103,7 @@ void MainWindow::on_pb_request_clicked()
    switch(type)
    {
    case requestAllFilms:
-       request = "SELECT title, release_year, c.name  FROM film f "
-                 "JOIN film_category fc on f.film_id = fc.film_id "
-                 "JOIN category c on c.category_id  = fc.category_id ";
-       req = [&]{dataBase->RequestToTableDB(request);};
+       req = [&]{dataBase->RequestToTableDB();};
        break;
    case requestComedy:
        request = "SELECT title, description FROM film f "
@@ -135,18 +127,6 @@ void MainWindow::on_pb_request_clicked()
 
 }
 
-/*!
- * \brief Слот отображает значение в QTableWidget
- * \param widget
- * \param typeRequest
- */
-void MainWindow::ScreenDataFromDB(const QTableWidget *widget, int typeRequest)
-{
-
-    ///Тут должен быть код ДЗ
-
-
-}
 /*!
  * \brief Метод изменяет стотояние формы в зависимости от статуса подключения к БД
  * \param status
